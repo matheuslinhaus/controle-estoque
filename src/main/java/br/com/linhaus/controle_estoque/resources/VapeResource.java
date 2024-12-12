@@ -17,6 +17,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.linhaus.controle_estoque.entities.Vape;
 import br.com.linhaus.controle_estoque.services.VapeService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 
 @RestController
 @RequestMapping(value = "vapes")
@@ -25,18 +29,22 @@ public class VapeResource {
 	@Autowired
 	private VapeService service;
 
+	@Operation(summary = "Buscar todos vapes", description = "Método para buscar todos os vapes no Banco de dados", tags = "Vape")
 	@GetMapping
 	public ResponseEntity<List<Vape>> findAll() {
 		List<Vape> list = service.findAll();
 		return ResponseEntity.ok().body(list);
 	}
 
+	@Operation(summary = "Buscar vape por Id", description = "Método para buscar vape por Id no Banco de dados", tags = "Vape")
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Vape> findById(@PathVariable Long id) {
 		Vape obj = service.findById(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
+	@Operation(summary = "Criar vape", description = "Método para criar vape no Banco de dados uma nova camisa", tags = "Vape", responses = {
+			@ApiResponse(responseCode = "201", description = "Inserido com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(example = ""))) })
 	@PostMapping
 	public ResponseEntity<Vape> insert(@RequestBody Vape obj) {
 		obj = service.insert(obj);
@@ -44,12 +52,13 @@ public class VapeResource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 
+	@Operation(summary = "Deletar vape", description = "Método para deletar vape no Banco de dados", tags = "Vape")
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
-
+	@Operation(summary = "Editar vape", description = "Método para editar vape no Banco de dados", tags = "Vape")
 	@PutMapping(value = "/{id}")
 	public ResponseEntity<Vape> update(@PathVariable Long id, @RequestBody Vape obj) {
 		obj = service.update(id, obj);
