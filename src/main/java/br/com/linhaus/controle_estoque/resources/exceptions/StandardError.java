@@ -13,7 +13,7 @@ public class StandardError implements Serializable {
 	private String error;
 	private String message;
 	private String path;
-	
+
 	public StandardError() {
 	}
 
@@ -65,7 +65,4 @@ public class StandardError implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	
-
 }

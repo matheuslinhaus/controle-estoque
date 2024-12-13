@@ -6,6 +6,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Vape extends Product {
@@ -13,7 +15,9 @@ public class Vape extends Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Min(value = 1, message = "The price must be greater than zero.")
 	private Integer puffs;
+	@NotEmpty(message = "The flavor is required and cannot be empty.")
 	private String flavor;
 
 	public Vape() {
