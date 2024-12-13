@@ -3,14 +3,22 @@ package br.com.linhaus.controle_estoque.entities;
 import java.util.Objects;
 
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 @MappedSuperclass
 public class Product {
 
+	@NotEmpty(message = "The description is required and cannot be empty.")
+	@Size(min = 4, max = 100, message = "The description must be between 4 and 100 characters long.")
 	private String description;
 	private String fullDescription;
+	@NotEmpty(message = "The brand is required and cannot be empty.")
 	private String brand;
+	@Min(value = 1, message = "The price must be greater than zero.")
 	private Double price;
+	@Min(value = 1, message = "The quantity must be greater than zero.")
 	private Integer quantity;
 	private String urlImage;
 
