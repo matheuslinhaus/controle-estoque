@@ -7,6 +7,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.linhaus.controle_estoque.entities.Brand;
+import br.com.linhaus.controle_estoque.entities.enums.ProductType;
 import br.com.linhaus.controle_estoque.repositories.BrandRepository;
 import br.com.linhaus.controle_estoque.services.exceptions.DatabaseException;
 import br.com.linhaus.controle_estoque.services.exceptions.ResourceNotFoundException;
@@ -20,6 +21,10 @@ public class BrandService {
 
 	public List<Brand> findAll() {
 		return brandRepository.findAll();
+	}
+	
+	public List<Brand> findByProductType(ProductType productType) {
+		return brandRepository.findByProductType(productType.getCode());
 	}
 
 	public Brand insert(Brand brand) {

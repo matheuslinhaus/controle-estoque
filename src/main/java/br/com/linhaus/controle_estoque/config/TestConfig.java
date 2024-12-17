@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 
 import br.com.linhaus.controle_estoque.entities.Brand;
 import br.com.linhaus.controle_estoque.entities.Shirt;
+import br.com.linhaus.controle_estoque.entities.enums.ProductType;
 import br.com.linhaus.controle_estoque.repositories.BrandRepository;
 import br.com.linhaus.controle_estoque.repositories.ShirtRepository;
 
@@ -26,8 +27,8 @@ public class TestConfig implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 
-		Brand mc0 = new Brand("Nike");
-		Brand mc1 = new Brand("Adidas");
+		Brand mc0 = new Brand("Nike", ProductType.SHIRT);
+		Brand mc1 = new Brand("Adidas", ProductType.SHOES);
 		Shirt cams = new Shirt("Blusa Gola Careca", "Blusa de Gola Careca cor Preta", 50.00, 10, "", null,
 				mc0, "Preto", "M", false, "Poliester");
 		camisaRepository.save(cams);
