@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import br.com.linhaus.controle_estoque.entities.Brand;
 import br.com.linhaus.controle_estoque.entities.Shirt;
+import br.com.linhaus.controle_estoque.repositories.BrandRepository;
 import br.com.linhaus.controle_estoque.repositories.ShirtRepository;
 import br.com.linhaus.controle_estoque.services.exceptions.DatabaseException;
 import br.com.linhaus.controle_estoque.services.exceptions.ResourceNotFoundException;
@@ -17,6 +19,8 @@ public class ShirtService {
 
 	@Autowired
 	private ShirtRepository shirtRepository;
+	@Autowired
+	private BrandRepository brandRepository;
 
 	public List<Shirt> findAll() {
 		return shirtRepository.findAll();
@@ -27,6 +31,9 @@ public class ShirtService {
 	}
 
 	public Shirt insert(Shirt shirt) {
+		Brand brand = brandRepository.findById(shirt.getBrand().getId())
+	            .orElseThrow(() -> new RuntimeException("Marca não encontrada"));
+		shirt.setBrand(brand);
 		return shirtRepository.save(shirt);
 	}
 
@@ -59,7 +66,11 @@ public class ShirtService {
 
 		entity.setDescription(obj.getDescription());
 		entity.setFullDescription(obj.getFullDescription());
-		entity.setBrand(obj.getBrand());
+		
+		Brand brand = brandRepository.findById(obj.getBrand().getId())
+	            .orElseThrow(() -> new RuntimeException("Marca não encontrada"));
+		entity.setBrand(brand);
+		
 		entity.setPrice(obj.getPrice());
 		entity.setQuantity(obj.getQuantity());
 		entity.setUrlImage(obj.getUrlImage());
