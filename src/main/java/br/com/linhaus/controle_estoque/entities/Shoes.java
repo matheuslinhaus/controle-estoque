@@ -2,10 +2,13 @@ package br.com.linhaus.controle_estoque.entities;
 
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -14,6 +17,10 @@ public class Shoes extends Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "brand_id") // Isso mapeia a chave estrangeira
+	//@NotNull(message = "The brand is required and cannot be empty.")
+	private Brand brand;
 	@NotEmpty(message = "The color is required and cannot be empty.")
 	private String color;
 	@NotEmpty(message = "The size is required and cannot be empty.")
@@ -23,10 +30,11 @@ public class Shoes extends Product {
 		super();
 	}
 
-	public Shoes(String description, String fullDescription, String brand, Double price, Integer quantity,
-			String urlImage, Long id, String color, String size) {
-		super(description, fullDescription, brand, price, quantity, urlImage);
+	public Shoes(String description, String fullDescription, Double price, Integer quantity, String urlImage, Long id,
+			Brand brand, String color, String size) {
+		super(description, fullDescription, price, quantity, urlImage);
 		this.id = id;
+		this.brand = brand;
 		this.color = color;
 		this.size = size;
 	}
@@ -35,8 +43,12 @@ public class Shoes extends Product {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public Brand getBrand() {
+		return brand;
+	}
+
+	public void setBrand(Brand brand) {
+		this.brand = brand;
 	}
 
 	public String getColor() {
@@ -77,6 +89,6 @@ public class Shoes extends Product {
 
 	@Override
 	public String toString() {
-		return "Shoes [id=" + id + ", color=" + color + ", size=" + size + "]";
+		return "Shoes [id=" + id + ", brand=" + brand + ", color=" + color + ", size=" + size + "]";
 	}
 }

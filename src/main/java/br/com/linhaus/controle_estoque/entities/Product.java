@@ -14,8 +14,6 @@ public class Product {
 	@Size(min = 4, max = 100, message = "The description must be between 4 and 100 characters long.")
 	private String description;
 	private String fullDescription;
-	@NotEmpty(message = "The brand is required and cannot be empty.")
-	private String brand;
 	@Min(value = 1, message = "The price must be greater than zero.")
 	private Double price;
 	@Min(value = 1, message = "The quantity must be greater than zero.")
@@ -26,11 +24,9 @@ public class Product {
 
 	}
 
-	public Product(String description, String fullDescription, String brand, Double price, Integer quantity,
-			String urlImage) {
+	public Product(String description, String fullDescription, Double price, Integer quantity, String urlImage) {
 		this.description = description;
 		this.fullDescription = fullDescription;
-		this.brand = brand;
 		this.price = price;
 		this.quantity = quantity;
 		this.urlImage = urlImage;
@@ -50,14 +46,6 @@ public class Product {
 
 	public void setFullDescription(String fullDescription) {
 		this.fullDescription = fullDescription;
-	}
-
-	public String getBrand() {
-		return brand;
-	}
-
-	public void setBrand(String brand) {
-		this.brand = brand;
 	}
 
 	public Double getPrice() {
@@ -86,7 +74,7 @@ public class Product {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(brand, description);
+		return Objects.hash(description, fullDescription, price, quantity, urlImage);
 	}
 
 	@Override
@@ -98,12 +86,14 @@ public class Product {
 		if (getClass() != obj.getClass())
 			return false;
 		Product other = (Product) obj;
-		return Objects.equals(brand, other.brand) && Objects.equals(description, other.description);
+		return Objects.equals(description, other.description) && Objects.equals(fullDescription, other.fullDescription)
+				&& Objects.equals(price, other.price) && Objects.equals(quantity, other.quantity)
+				&& Objects.equals(urlImage, other.urlImage);
 	}
 
 	@Override
 	public String toString() {
-		return "Product [description=" + description + ", fullDescription=" + fullDescription + ", brand=" + brand
-				+ ", price=" + price + ", quantity=" + quantity + ", urlImage=" + urlImage + "]";
+		return "Product [description=" + description + ", fullDescription=" + fullDescription + ", price=" + price
+				+ ", quantity=" + quantity + ", urlImage=" + urlImage + "]";
 	}
 }
