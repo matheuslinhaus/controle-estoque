@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import br.com.linhaus.controle_estoque.entities.Brand;
 import br.com.linhaus.controle_estoque.entities.Vape;
+import br.com.linhaus.controle_estoque.repositories.BrandRepository;
 import br.com.linhaus.controle_estoque.repositories.VapeRepository;
 import br.com.linhaus.controle_estoque.services.exceptions.DatabaseException;
 import br.com.linhaus.controle_estoque.services.exceptions.ResourceNotFoundException;
@@ -17,6 +19,9 @@ public class VapeService {
 
 	@Autowired
 	private VapeRepository vapeRepository;
+	
+	@Autowired
+	private BrandRepository brandRepository;
 
 	public List<Vape> findAll() {
 		return vapeRepository.findAll();
@@ -27,6 +32,9 @@ public class VapeService {
 	}
 
 	public Vape insert(Vape vape) {
+		Brand brand = brandRepository.findById(vape.getBrand().getId())
+	            .orElseThrow(() -> new RuntimeException("Marca não encontrada"));
+		vape.setBrand(brand);
 		return vapeRepository.save(vape);
 	}
 
@@ -57,7 +65,9 @@ public class VapeService {
 
 		entity.setDescription(obj.getDescription());
 		entity.setFullDescription(obj.getFullDescription());
-		entity.setBrand(obj.getBrand());
+		Brand brand = brandRepository.findById(obj.getBrand().getId())
+	            .orElseThrow(() -> new RuntimeException("Marca não encontrada"));
+		entity.setBrand(brand);
 		entity.setPrice(obj.getPrice());
 		entity.setQuantity(obj.getQuantity());
 		entity.setUrlImage(obj.getUrlImage());
