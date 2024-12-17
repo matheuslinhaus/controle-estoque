@@ -2,7 +2,10 @@ package br.com.linhaus.controle_estoque.entities;
 
 import java.util.Objects;
 
+import br.com.linhaus.controle_estoque.entities.enums.ProductType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,14 +17,22 @@ public class Brand {
 	private Long id;
 	private String name;
 
+	@Enumerated(EnumType.ORDINAL)
+	private ProductType productType;
+
 	public Brand() {
 	}
 
 	/**
 	 * @param name
 	 */
-	public Brand(String name) {
+	public Brand(String name, ProductType productType) {
 		this.name = name;
+		this.productType = productType;
+	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -32,8 +43,12 @@ public class Brand {
 		this.name = name;
 	}
 
-	public Long getId() {
-		return id;
+	public ProductType getProductType() {
+		return productType;
+	}
+
+	public void setProductType(ProductType productType) {
+		this.productType = productType;
 	}
 
 	@Override
