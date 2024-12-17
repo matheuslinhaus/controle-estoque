@@ -7,7 +7,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import br.com.linhaus.controle_estoque.entities.Brand;
 import br.com.linhaus.controle_estoque.entities.Shirt;
+import br.com.linhaus.controle_estoque.repositories.BrandRepository;
 import br.com.linhaus.controle_estoque.repositories.ShirtRepository;
 
 @Configuration
