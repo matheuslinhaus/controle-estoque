@@ -54,6 +54,7 @@ public class BrandService {
 
 	private void updateData(Brand entity, Brand obj) {
 		entity.setName(obj.getName());
+		entity.setProductType(obj.getProductType());
 
 	}
 
